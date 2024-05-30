@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        oswald: 'Oswald, ui-serif', // Adds a new `font-oswald` class
+        outfit: "Outfit, sans-serif", // Adds a new `font-oswald` class
       }
     },
   },
