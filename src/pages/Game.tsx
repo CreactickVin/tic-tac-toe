@@ -1,12 +1,12 @@
-// import logo from '../assets/logo.svg'
+import logo from '../assets/logo.svg'
 
-// function Game() {
-//     return (
-//         <div className='bg-[#1a2a33] text-white min-h-screen flex flex-col'>
-//             <div>
-//                 <div>
-//                     <img src={logo} alt="logo"/>
-//                 </div>
+function Game() {
+    return (
+        <div className='bg-[#1a2a33] text-white min-h-screen flex flex-col font-outfit font-bold'>
+            <div>
+                <div>
+                    <img src={logo} alt="logo"/>
+                </div>
 
 //                 <div className='h-6'>
 
