@@ -4,7 +4,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        oswald: 'Oswald, ui-serif', // Adds a new `font-oswald` class
+      }
+    },
   },
   plugins: [],
 }
