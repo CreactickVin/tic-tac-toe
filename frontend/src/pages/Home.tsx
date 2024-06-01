@@ -5,9 +5,11 @@ import oLightIcon from "../assets/icon-o-light.svg";
 import xDarkIcon from "../assets/icon-x-dark.svg";
 import xLightIcon from "../assets/icon-x-light.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [isXClicked, setIsXClicked] = useState(true);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#1a2a33] h-screen flex flex-col justify-center items-center">
@@ -38,7 +40,7 @@ function Home() {
         </h1>
       </div>
       <div>
-        <button className="px-36 custom-box-shadow-blue text-[#1a2a33] font-outfit p-6 bg-[#31c3bd] font-semibold rounded-xl text-xl">
+        <button className="px-36 custom-box-shadow-blue text-[#1a2a33] font-outfit p-6 bg-[#31c3bd] font-semibold rounded-xl text-xl" onClick={()=>navigate(`/game/${isXClicked ? 'X' : 'O'}`)}>
           NEW GAME (VS PLAYER)
         </button>
       </div>
