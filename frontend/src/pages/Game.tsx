@@ -1,8 +1,7 @@
 import logo from '../assets/logo.svg'
 import restart from '../assets/icon-restart.svg'
-
 import icon_x from '../assets/icon-x.svg'
-import RestartModal from "../components/RestartModal";
+import RestartModal from "../../frontend/components/RestartModal";
 
 function Game() {
     return (

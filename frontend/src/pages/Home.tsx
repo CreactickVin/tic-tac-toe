@@ -1,9 +1,9 @@
-import xIcon from "../Assets/icon-x.svg";
-import oIcon from "../Assets/icon-o.svg";
-import oDarkIcon from "../Assets/icon-o-dark.svg";
-import oLightIcon from "../Assets/icon-o-light.svg";
-import xDarkIcon from "../Assets/icon-x-dark.svg";
-import xLightIcon from "../Assets/icon-x-light.svg";
+import xIcon from "../assets/icon-x.svg";
+import oIcon from "../assets/icon-o.svg";
+import oDarkIcon from "../assets/icon-o-dark.svg";
+import oLightIcon from "../assets/icon-o-light.svg";
+import xDarkIcon from "../assets/icon-x-dark.svg";
+import xLightIcon from "../assets/icon-x-light.svg";
 import { useState } from "react";
 
 function Home() {
