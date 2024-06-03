@@ -1,30 +1,56 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import logo from '../assets/logo.svg'
 import restart from '../assets/icon-restart.svg'
 import icon_x from '../assets/icon-x.svg'
 import icon_o from '../assets/icon-o.svg'
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import io from "socket.io-client"
 
 function Game() {
-
+    const [socket, setSocket] = useState();
     const [showModal, setShowModal] = useState(false);
+    const [isWin, setIsWin] = useState(false);
+    const [winner, setWinner] = useState("");
     const [data, setData] = useState(['', '', '', '', '', '', '', '', '']);
-
     const {turn} = useParams();
+    const navigate = useNavigate();
+    const winningSequence = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
-    // const socket = io('http://localhost:8080');
-    // socket.on('connect', () => {
-    //     console.log("id", socket.id);
+    useEffect(() => {
+        const socket = io('http://localhost:8080');
+        setSocket(socket);
+    }, [])
 
-    // })
 
-    // socket.emit('board-data',)
+    if (socket) {
+        socket.on('connect', () => {
+            console.log("id", socket.id);
+        })
+
+        socket.on("move response", (array) => {
+            setData(array)
+        })
+    }
+
 
     function modifyData(index) {
-        setData(prevData => prevData.map((item, i) => i === index ? turn : item));
+        const updatedArray = data.map((item, i) => i === index ? turn : item)
+        socket.emit("move", (updatedArray))
         console.log("clicked ");
 
+
+        setData(updatedArray);
     }
+
+    useEffect(() => {
+        winningSequence.forEach((arr) => {
+            if (data[arr[0]] && data[arr[1]] && data[arr[2]] && data[arr[0]] === data[arr[1]] && data[arr[1]] === data[arr[2]]) {
+                console.log("true", data[arr[2]]);
+                setWinner(data[arr[2]])
+                setIsWin(true)
+            }
+        })
+    }, [data])
 
 
     return (
@@ -37,7 +63,7 @@ function Game() {
                     </Link>
 
                     <div className='px-6 py-4 bg-[#1f3641] flex p-6 rounded-lg shadow-[inset_0_-0.4rem_0_#0f191e]'>
-                        <img className='w-5 h-5 text-black' src={turn==='X'? icon_x : icon_o} alt="turn of"/>
+                        <img className='w-5 h-5 text-black' src={turn === 'X' ? icon_x : icon_o} alt="turn of"/>
                         <div className='ml-3'>TURN</div>
 
                     </div>
@@ -80,14 +106,42 @@ function Game() {
                         <button className='bg-[#a8bfc9] p-4 rounded-lg shadow-[inset_0_-0.4rem_0_#6991a2]'
                                 onClick={() => setShowModal(false)}>NO, CANCEL
                         </button>
-                        <button className='bg-[#f2b137] p-4 ml-6 rounded-lg shadow-[inset_0_-0.4rem_0_#b77c0c]' onClick={() => {
-                            setData(['', '', '', '', '', '', '', '', ''])
-                            setShowModal(false)
-                        }}>
+                        <button className='bg-[#f2b137] p-4 ml-6 rounded-lg shadow-[inset_0_-0.4rem_0_#b77c0c]'
+                                onClick={() => {
+                                    setData(['', '', '', '', '', '', '', '', ''])
+                                    setShowModal(false)
+                                }}>
                             YES, RESTART
                         </button>
                     </div>
                 </div>
+                }
+
+                {
+                    isWin && <div
+                        className='absolute top-1/4 p-20 bg-[#1f3641] text-[#1a2a33] w-full z-40 flex flex-col items-center'>
+                        <div className="flex">
+                            <img className="h-12" src={winner === 'X' ? icon_x : icon_o} alt="turn icon"/>
+                            <h1 className='ml-6 text-[#a8bfc9] text-5xl'>
+                                WIN</h1>
+                        </div>
+
+                        <div className='mt-10 text-2xl'>
+                            <button className='bg-[#a8bfc9] p-4 rounded-lg shadow-[inset_0_-0.4rem_0_#6991a2]'
+                                    onClick={() => {
+                                        navigate("/")
+                                    }}>
+                                QUIT
+                            </button>
+                            <button className='bg-[#f2b137] p-4 ml-6 rounded-lg shadow-[inset_0_-0.4rem_0_#b77c0c]'
+                                    onClick={() => {
+                                        setData(['', '', '', '', '', '', '', '', ''])
+                                        setIsWin(false)
+                                    }}>
+                                NEXT ROUND
+                            </button>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
