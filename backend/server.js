@@ -7,14 +7,15 @@ const io = require("socket.io")(httpServer, {
 
 io.on("connection", socket => {
     console.log("connected with id " + socket.id);
-    
+
     socket.on("move", (gridArray) => {
-        socket.broadcast.emit("move response",gridArray)
+        socket.broadcast.emit("move response", gridArray)
     })
 
     socket.on("disconnect", () => {
         console.log("disconnected with id " + socket.id);
     })
+
 })
 
 httpServer.listen(8080);
