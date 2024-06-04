@@ -7,13 +7,9 @@ const io = require("socket.io")(httpServer, {
 
 io.on("connection", socket => {
     console.log("connected with id " + socket.id);
+    
     socket.on("move", (gridArray) => {
-        console.log("gridArray", gridArray)
         socket.broadcast.emit("move response",gridArray)
-    })
-
-    socket.on("result", (result) => {
-        socket.broadcast.emit(result)
     })
 
     socket.on("disconnect", () => {

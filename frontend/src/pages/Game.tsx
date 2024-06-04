@@ -36,7 +36,6 @@ function Game() {
     function modifyData(index) {
         const updatedArray = data.map((item, i) => i === index ? turn : item)
         socket.emit("move", (updatedArray))
-        console.log("clicked ");
 
 
         setData(updatedArray);
@@ -45,7 +44,6 @@ function Game() {
     useEffect(() => {
         winningSequence.forEach((arr) => {
             if (data[arr[0]] && data[arr[1]] && data[arr[2]] && data[arr[0]] === data[arr[1]] && data[arr[1]] === data[arr[2]]) {
-                console.log("true", data[arr[2]]);
                 setWinner(data[arr[2]])
                 setIsWin(true)
             }
