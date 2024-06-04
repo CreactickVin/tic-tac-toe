@@ -1,7 +1,0 @@
-.empty-item::before {
-    content: '';
-    display: block;
-    width: 4rem; /* Adjust to match the actual size of content-path-x and content-path-o */
-    height: 4rem; /* Adjust to match the actual size of content-path-x and content-path-o */
-  }
-  
